@@ -1,0 +1,11 @@
+@use 'normalize' as _normalize;
+@use 'home' as _home;
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}

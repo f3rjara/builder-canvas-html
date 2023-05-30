@@ -1,0 +1,27 @@
+.btn {
+  border: 2px solid transparent;
+  padding: 10px;
+  border-radius: 2px;
+  text-transform: uppercase;
+  font-size: .8em;
+  background: rgb(0, 0, 0);
+  color: white;
+  &:hover {
+    border-bottom: 2px solid purple;
+    background: rgba(0, 0, 0, .85);
+  }
+
+  &__download {
+    background: rgb(22, 17, 66);
+    &:hover {
+      background: rgb(25, 18, 85);
+    }
+  }
+
+  &__save {
+    background: rgb(7, 77, 47);
+    &:hover {
+      background: rgb(6, 102, 60);
+    }
+  }
+}

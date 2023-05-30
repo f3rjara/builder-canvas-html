@@ -1,0 +1,160 @@
+@use 'vars' as _vars;
+
+@use './components/select' as _select;
+@use './components/button' as _btn;
+@use './components/input__file' as _inputFile;
+@use './components/input__text' as _inputText;
+
+.main {
+  background: _vars.$gray;
+  min-height: 100vh;
+  display:  grid;
+  grid-template-columns: auto 1fr;
+  gap: 20px;
+  padding: 20px;
+  position: relative;
+}
+
+.card {
+  background: _vars.$white;
+  border-radius: 20px;
+  box-shadow: _vars.$shadow;
+}
+
+.panel {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr;
+  &__control {
+    display: flex;
+    gap: 10px;
+    padding: 1em;
+  }
+  &__options {
+    border: 1px solid greenyellow;
+    padding: 10px;
+  }
+  &__elements {
+    padding: 1em;
+    background: _vars.$gray-light;
+    margin: 0;
+  }
+}
+
+.elements {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border: 1px solid greenyellow;
+  &__item {
+    background-color: _vars.$white;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    user-select: none;
+    touch-action: none;
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    &:hover {
+      background-color: antiquewhite;
+      cursor: grab;
+    }
+  }
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr auto;
+  &__menu {
+    padding: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 20px;
+  }
+
+  &__canvas {
+    background-color: _vars.$gray-light;
+    padding: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__actions {
+    padding: 1em;
+  }
+}
+
+.canvas__template {
+  background: _vars.$white;
+  box-shadow: _vars.$shadow;
+}
+
+.drag-over {
+  border: 3px dashed red;
+}
+
+.modal__container {
+  position: absolute;
+  z-index: 99;
+  background-color: gray;
+  width: 90%;
+  height: 90%;
+  top: 5%;
+  left: 5%;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  display: none;
+  flex-direction: column;
+  gap: 30px;
+
+  .canvas__template {
+    margin: 0 auto;
+    cursor: auto;
+  }
+
+  &--active {
+    display: flex;
+    
+  }
+}
+
+
+.dropzone__template {
+  width: 11in; /* Ancho de una hoja tamaño carta */
+  height: 8.5in; /* Alto de una hoja tamaño carta */
+  background-color: white; /* Opcional: Fondo blanco para simular una hoja */
+  margin: 0 auto;
+  border-radius: 5px;
+  transition: all .3s ease;
+  position: relative;
+}
+
+.dragging {
+  /* Estilos para el elemento mientras se arrastra */
+  opacity: 1;
+  transform: scale(0.9);
+  border: 1px dashed red;
+  background-color: black;
+  color: white;
+}
+
+.dragging--enter {
+  /* Estilos para el elemento mientras se arrastra */
+  opacity: .8;
+  transform: scale(1.02);
+  border: 1px dashed red;
+  background-color: rgba(127, 255, 212, 0.568);
+}
+
+.drop--element {
+  /* Estilos para el elemento mientras se arrastra */
+  border: 1px dashed red;
+  background-color: rgba(139, 139, 139, 0.568);
+}

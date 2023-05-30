@@ -1,0 +1,44 @@
+
+.wrapper__input {
+  display: flex;
+  gap: 10px;
+}
+/* Estilo base para ocultar el input original */
+input[type="file"] {
+  display: none;
+}
+
+/* Estilo personalizado para el botón de carga */
+.label-file-upload {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #000000;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+/* Cambiar el color de fondo del botón al pasar el ratón */
+.label-file-upload:hover {
+  background-color: #32393d;
+}
+
+/* Estilo para mostrar el nombre del archivo seleccionado */
+.file-upload-info {
+  font-size: 14px;
+  color: #555;
+  position: relative;
+  line-height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 5px;
+  &::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: gray;
+  }
+}

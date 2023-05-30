@@ -1,0 +1,42 @@
+
+.form-select {
+  border:1px solid #d9d9d9;
+  overflow: hidden;
+  position:relative;
+  cursor: pointer;
+  min-width: 160px;
+
+  select {
+    background: transparent;
+    border: none;
+    font-size: 12px;
+    padding: 5px;
+    padding-right: 35px;
+    line-height: 100%;
+    appearance: none;
+    text-indent: 1px;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    &:focus{ outline: none; }
+  }
+
+  &::after{
+    content:"\025be";
+    position:absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width:30px;
+    height: 100%;
+    background-color:#d9d9d9;
+    top:0;
+    right:0px;	
+    pointer-events: none;
+    cursor: pointer;
+  }
+}
+
+select::-ms-expand {
+  display: none;
+}

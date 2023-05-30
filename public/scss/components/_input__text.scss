@@ -1,0 +1,15 @@
+/* Estilos básicos para el input de tipo text */
+input[type="text"] {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: #333;
+  background-color: #f8f8f8;
+}
+
+/* Estilos para resaltar el input al enfocarlo */
+input[type="text"]:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 8px #3498db;
+}
