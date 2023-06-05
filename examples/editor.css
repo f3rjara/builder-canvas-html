@@ -1,0 +1,50 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #333;
+}
+
+.elements {
+  padding: 2em;
+  display: flex;
+  gap: 30px;
+}
+
+.elements__item {
+  border: 1px solid gray;
+  padding: 10px;
+  display: flex;
+  position: relative;
+}
+
+.elements__item .edit-button  {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #333;
+  color: aliceblue;
+  user-select: none;
+  border: none;
+  border-radius: 50%;
+  font-size: 15px;
+  transform: translateY(-50%) translateX(50%);
+  cursor: pointer;
+}
+
+.note-status-output {
+  padding: 0;
+}
+
+.popover-content, .note-btn-group {
+  display: flex;
+}

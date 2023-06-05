@@ -1,6 +1,7 @@
 
 .wrapper__input {
   display: flex;
+  flex-direction: column;
   gap: 10px;
 }
 /* Estilo base para ocultar el input original */
@@ -20,15 +21,15 @@ input[type="file"] {
 
 /* Cambiar el color de fondo del botón al pasar el ratón */
 .label-file-upload:hover {
-  background-color: #32393d;
+  background-color: #032c44;
 }
 
 /* Estilo para mostrar el nombre del archivo seleccionado */
 .file-upload-info {
   font-size: 14px;
-  color: #555;
+  color: #ffffff;
   position: relative;
-  line-height: 100%;
+  line-height: 45px;
   display: flex;
   align-items: center;
   padding: 0 5px;

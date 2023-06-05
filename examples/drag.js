@@ -4,13 +4,13 @@ const dropzone__template = document.querySelector('.dropzone__template');
 const dropzone__canvas = document.querySelector('.dropzone__canvas');
 const cntx = dropzone__canvas.getContext('2d');
 
+let buttons_edit = document.querySelectorAll('.edit-button');
 
 elements__item.forEach(( element_drag ) => {
   element_drag.addEventListener('dragstart', (event) => dragStart(event) );
   element_drag.addEventListener('drag', (event) => drag(event) );
   element_drag.addEventListener('dragend', (event) => dragEnd(event) );
 });
-
 
 const dragStart = ( event ) => {
   let element_drag = event.target;
@@ -73,7 +73,16 @@ const drop = ( event ) => {
   } else {
     element_drag.classList.remove('dragging--active','dragging');
     element_drag_clone = element_drag.cloneNode(true);
-    element_drag_clone.id = `${element_drag_id}--clone`;
+    const uid = Math.floor(Math.random() * 1000000);
+    element_drag_clone.id = `${element_drag_id}--clone--${uid}`;
+    element_drag_clone.classList.add('elements__item--clone');
+
+    // get child .edit-button element of element_drag_clone
+    const edit_button = element_drag_clone.querySelector('.edit-button');
+    // add data-target id 
+      edit_button.setAttribute('data-target', element_drag_clone.id);
+      console.log('edit_button --->', edit_button);
+
 
     // agregar evento para drag
     element_drag_clone.addEventListener('dragstart', (event) => dragStart(event) );
@@ -86,6 +95,13 @@ const drop = ( event ) => {
   
   if (element_drag_clone && element_dropzone === dropzone__template) {
     console.log("---> Drop, el usuario solto el elemento en la dropzone", element_drag_clone );
+
+    // Verificar si existe en el DropZone, sino agregar el elemento
+    if(!element_drag.classList.contains('drop--element')) {
+      element_drag_clone.classList.add('drop--element');
+      dropzone__template.appendChild(element_drag_clone);  
+    }
+
     // Obtener las coordenadas del evento en relación con el dropzone
     const dropX = event.clientX - dropzone__template.getBoundingClientRect().left;
     const dropY = event.clientY - dropzone__template.getBoundingClientRect().top;
@@ -100,15 +116,32 @@ const drop = ( event ) => {
     const clampedX = Math.min(Math.max(dropX, 0), maxX);
     const clampedY = Math.min(Math.max(dropY, 0), maxY);
 
-    if(!element_drag.classList.contains('drop--element')) {
-      element_drag_clone.classList.add('drop--element');
-      dropzone__template.appendChild(element_drag_clone);  
-    }
 
     // Establecer la posición del elemento en el dropzone
     element_drag_clone.style.position = 'absolute';
     element_drag_clone.style.left = `${clampedX}px`;
     element_drag_clone.style.top = `${clampedY}px`;
+
+
+    buttons_edit = document.querySelectorAll('.edit-button');
+    buttons_edit.forEach(button => button.addEventListener('click', (event) => activateEditBlock(event)));
+
+    tinymce.init({
+      selector: `#${element_drag_clone.id} > .content__element`,
+      inline: true,
+      menubar: false,
+      toolbar: [
+        { name: 'history', items: ['undo', 'redo'] },
+        { name: 'styles', items: ['styleselect'] },
+        { name: 'formatting', items: ['bold', 'italic', 'underline', 'fontsizeselect', 'lineheight'] },
+        { name: 'color', items: ['forecolor', 'backcolor'] },
+      ],
+      setup: function (editor) {
+        editor.on('init', function () {
+          editor.setMode('readonly'); // Establecer el modo de edición como solo lectura inicialmente
+        });
+      }
+    });
 
   } else {
     console.log("**********************");
@@ -134,4 +167,45 @@ const generateCanvasTemplate = ( event ) => {
     ctx.drawImage(canvas, 0, 0);
   });
 
+}
+
+
+
+buttons_edit.forEach(button => {
+  button.addEventListener('click', (event) => activateEditBlock(event));
+})
+
+const activateEditBlock = async (event) => {
+  const button = event.currentTarget;
+  button.classList.toggle('action--edit');
+  const targetElementId = button.getAttribute('data-target');
+  const elementEditorId = document.querySelector(`#${targetElementId}`);
+  let thisEditor = await tinymce.get(`#${elementEditorId.id} > .content__element`);
+
+  if (!thisEditor) {
+    tinymce.init({
+      selector: `#${elementEditorId.id} > .content__element`,
+      inline: true,
+      menubar: false,
+      toolbar: [
+        { name: 'history', items: ['undo', 'redo'] },
+        { name: 'styles', items: ['styleselect'] },
+        { name: 'formatting', items: ['bold', 'italic', 'underline', 'fontsizeselect', 'lineheight'] },
+        { name: 'color', items: ['forecolor', 'backcolor'] },
+      ],
+      setup: function (editor) {
+        editor.on('init', function () {
+          editor.setMode('readonly'); // Establecer el modo de edición como solo lectura inicialmente
+        });
+      }
+    });
+  } else {
+    if (thisEditor.getMode() === 'readonly') {
+      thisEditor.setMode('design'); // Cambiar al modo de edición si el editor estaba en modo de solo lectura
+    } else {
+      thisEditor.setMode('readonly'); // Cambiar al modo de solo lectura si el editor estaba en modo de edición
+    }
+  }
+
+  console.log('thisEditor --------->', thisEditor);
 }

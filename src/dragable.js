@@ -1,6 +1,11 @@
 
 const dropzone__canvas = document.querySelector('.canvas__template');
 const cntx = dropzone__canvas.getContext('2d');
+let buttons_edit = document.querySelectorAll('.edit-button');
+buttons_edit.forEach(button => button.addEventListener('click', (event) => editElement(event)));
+
+let buttons_remove = document.querySelectorAll('.remove-button');
+buttons_remove.forEach(button => button.addEventListener('click', (event) => removeElement(event)));
 
 initiazlieEvents();
 
@@ -90,6 +95,7 @@ const drop = ( event ) => {
 
     if (!element_drag_clone.classList.contains('drop--element')) {
       element_drag_clone.classList.add('drop--element');
+      element_drag_clone.classList.add('elements__item--clone');
       dropzone__template.appendChild(element_drag_clone);
     }
 
@@ -98,8 +104,63 @@ const drop = ( event ) => {
     // Establecer la posición del elemento en el dropzone de forma precisa con transform: translate
     element_drag_clone.style.transform = `translate(${clampedX}px, ${clampedY}px)`;
 
+    console.log("element_drag_clone", element_drag_clone);
+    const content__element = element_drag_clone.querySelector('.content__element');
+    if( content__element ) {
+      console.log("content__element", content__element);
+      $(content__element).summernote({
+        lang: 'es-ES',
+        disableDragAndDrop: true,
+        airMode: true,
+        popover: {
+          air: [
+            ['reset', ['clear', 'undo', 'redo']],
+            ['styleText', ['bold', 'italic', 'underline', 'strikethrough']],
+            ['fontname', ['fontname']],
+            ['style', ['style']],
+            ['fontsize', ['color', 'height', 'fontsize']],
+          ]
+        },
+        fontNames: ['Serif', 'Sans', 'Arial', 'Arial Black', 'Courier', 'Courier New', 'Comic Sans MS', 'Helvetica', 'Impact', 'Lucida Grande', 'Sacramento']
+      });
+    }
+    
+
+    // update data-element-ref whit id clone
+    const button_edit = element_drag_clone.querySelector('.edit-button');
+    const button_remove = element_drag_clone.querySelector('.remove-button');
+    if(button_edit) button_edit.dataset.elementRef = element_drag_clone.id;
+    if(button_remove) button_remove.dataset.elementRef = element_drag_clone.id;
+
+    buttons_edit = document.querySelectorAll('.edit-button');
+    buttons_remove = document.querySelectorAll('.remove-button');
+    buttons_edit.forEach(button => button.addEventListener('click', (event) => editElement(event)));
+    buttons_remove.forEach(button => button.addEventListener('click', (event) => removeElement(event)));
   } else {
     console.log("**********************");
     console.log("No se puede soltar el elemento en el dropzone");
   }
+}
+
+
+const editElement = (event) => {
+  const button = event.currentTarget;
+  const element_ref_id = button.dataset.elementRef;
+  $(`#${element_ref_id} > .content__element`).summernote({ focus: true, airMode: true });
+  $(`#${element_ref_id} > .content__element`).trigger('click');
+  // select all text in editor
+  $(`#${element_ref_id} > .content__element`).select();
+  const element_ref = document.getElementById(element_ref_id);
+  const note_popover =  element_ref.querySelector('.note-air-popover');
+  note_popover.style.display = 'block';
+  note_popover.style.top = '100%';
+};
+
+
+const removeElement = (event) => {
+  const button = event.currentTarget;
+  const element_ref_id = button.dataset.elementRef;
+  const element_ref = document.getElementById(element_ref_id);
+  console.log("element_ref", element_ref);
+  if(element_ref)  element_ref.remove();
 }

@@ -82,7 +82,7 @@ const saveCanvas = ( event ) => {
 
   template__active = template_to_save;
 
-  const existing_template = templates__saved.find( template => template.id === canvas_to_save.id );
+  const existing_template = templates__saved.find( template => template.id === template_to_save.id );
   if( existing_template ) {
     // update
     const index = templates__saved.indexOf(existing_template);

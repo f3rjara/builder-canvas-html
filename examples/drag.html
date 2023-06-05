@@ -7,17 +7,34 @@
   <title>ARCHIVO PRUEBA DE DRAG</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <link rel="stylesheet" href="style.css">
+
+
+  <script src="https://cdn.tiny.cloud/1/xi5300e6ygh4v4r3k44wq6p7yzpnpwmrurjf2ntbd2q8yh0g/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+
+
 </head>
 <body>
 
   <main class="main">
 
-    <div class="elements"> 
-      <div class="elements__item" id="elements__item--1" draggable="true"> elemento 1 </div>
-      <div class="elements__item" id="elements__item--2" draggable="true"> elemento 2 </div>
+
+    <div class="elements">
+
+      <div class="elements__item" id="elements__item--1" draggable="true" >
+        <div class="content__element"> elemento 2 </div>
+        <button class="edit-button" >
+          <i class="fa fa-pencil">&#x270E;</i>
+        </button>
+      </div>
+
+      <div class="elements__item" id="elements__item--2" draggable="true" >
+        <div class="content__element"> elemento 2 </div>
+        <button class="edit-button" >
+          <i class="fa fa-pencil">&#x270E;</i>
+        </button>
+      </div>
+
     </div>
-
-
     
 
     <div class="container__canvas canvas">
