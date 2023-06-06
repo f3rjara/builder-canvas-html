@@ -168,7 +168,7 @@ const generateCanvasTemplate = ( event ) => {
   console.log('generateCanvasTemplate');
   modal__container.classList.add('modal__container--active');
   // Capturar una imagen del contenido de dropzone__template utilizando html2canvas
-  html2canvas(dropzone__template).then((canvas) => {
+  html2canvas(dropzone__template, { letterRendering: 1, allowTaint : true}).then((canvas) => {
     // Limpiar el contenido existente en dropzone__canvas
     const ctx = dropzone__canvas.getContext('2d');
     ctx.clearRect(0, 0, dropzone__canvas.width, dropzone__canvas.height);
